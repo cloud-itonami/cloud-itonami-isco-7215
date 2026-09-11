@@ -14,7 +14,7 @@ This repository designs a forkable OSS business for a rigging-crew job-site coor
 (ADR-2607011000): `:intake -> :advise -> :govern -> :decide -+-> :commit
 (:ok? true) +-> :request-approval (:escalate? true, human-in-the-loop
 interrupt) +-> :hold (:hard? true)`. 22 tests / 52 assertions green
-(`clojure -M:test`).
+(`kbb -M:test`).
 
 HARD invariants (always `:hold`, never overridable): the job site
 must be independently verified/registered before any action; a
