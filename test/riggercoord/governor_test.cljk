@@ -1,5 +1,5 @@
 (ns riggercoord.governor-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [riggercoord.store :as store]
             [riggercoord.advisor :as advisor]
             [riggercoord.governor :as governor]))
