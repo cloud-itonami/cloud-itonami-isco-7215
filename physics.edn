@@ -1,0 +1,34 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:physics` runs it.
+;;
+;; README "Robotics premise": a job-site scheduling/logistics coordination
+;; robot for riggers and cable splicers (ISCO 7215) logs work records,
+;; proposes crew schedules, surfaces safety concerns and coordinates
+;; rigging-equipment supply orders; it never rigs or splices. Its physical
+;; work is rigging-gear logistics: moving shackles and blocks onto the gear
+;; cart, and proof-loading a wire-rope sling before it goes back into
+;; service.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isco-7215"
+ :cases
+ [{:id :gear-onto-cart
+   :kind :manipulator
+   :procedure "arm lifts a shackle / snatch block from the gear store's floor rack onto the rigging gear cart"
+   :params {:l1-m 0.60 :l2-m 0.50 :m1-kg 8.0 :m2-kg 5.0
+            :from [0.70 0.05] :to [0.40 0.85] :duration-s 2.5 :steps 500}
+   :sweep {:param :payload-kg :values [5.0 10.0 15.0 25.0 35.0]}
+   :quantity :peak-tau1-nm
+   :limit {:max 200.0 :basis "estimate: continuous shoulder torque of a ~15-20 kg-payload collaborative arm class"}
+   :boundary {:lo 1.0 :hi 100.0}}
+  {:id :sling-proof-load
+   :kind :material
+   :procedure "robot proof-loads a 1 m test length of 16 mm steel wire-rope sling in a test bed before it returns to service; the applied load is swept"
+   :params {:length-m 1.0 :area-m2 1.36e-4 :youngs-modulus-pa 100.0e9 :yield-stress-pa 1100.0e6
+            :hardening-pa 2.0e9 :density-kg-m3 7850.0}
+   :sweep {:param :max-force-n :values [40000.0 60000.0 80000.0 120000.0 160000.0]}
+   :quantity :final-strain
+   :limit {:max 0.011 :basis "estimate: the rope must stay elastic at proof load; metallic area (~0.53 d^2), rope modulus ~100 GPa and a 1100 MPa elastic limit are all estimates for a 1770-grade 6x36 IWRC rope, not taken from a datasheet"}
+   :boundary {:lo 20000.0 :hi 250000.0}}]}
