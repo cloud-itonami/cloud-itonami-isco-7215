@@ -1,7 +1,7 @@
 (ns riggercoord.store
   "SSoT for the ISCO-08 7215 rigging and cable-splicing crew
   scheduling/logistics coordination actor (itonami actor pattern,
-  ADR-2607011000 / CLAUDE.md Actors section; README's 'Robotics
+  ADR-2607011000 / AGENTS.md Actors section; README's 'Robotics
   premise' — a job-site scheduling/logistics coordination robot
   proposes crew scheduling, work-record logging, safety-concern flags
   and rigging-equipment supply-order coordination under this
